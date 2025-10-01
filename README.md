@@ -1,4 +1,4 @@
-# Job Search Agent 🤖
+# First Agent 🤖
 
 A modular AI-powered agent built with LangChain and Claude that uses the ReAct (Reasoning + Acting) framework to search and retrieve structured information from the web.
 
