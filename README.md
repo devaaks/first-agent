@@ -2,15 +2,40 @@
 
 A modular AI-powered agent built with LangChain and Claude that uses the ReAct (Reasoning + Acting) framework to search and retrieve structured information from the web.
 
+## 📑 Table of Contents
+
+- [Features](#-features)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+  - [Using UV (Recommended)](#using-uv-recommended)
+- [Configuration](#️-configuration)
+  - [Getting API Keys](#getting-api-keys)
+- [Usage](#-usage)
+  - [Basic Example](#basic-example)
+  - [Custom Implementation](#custom-implementation)
+- [Project Structure](#-project-structure)
+- [Architecture](#️-architecture)
+- [Customization](#-customization)
+  - [Adding New Tools](#adding-new-tools)
+  - [Modifying Output Schema](#modifying-output-schema)
+  - [Customizing Prompts](#customizing-prompts)
+- [Development](#️-development)
+- [Dependencies](#-dependencies)
+- [Contributing](#-contributing)
+- [Examples](#-examples)
+- [Troubleshooting](#-troubleshooting)
+- [License](#-license)
+- [Acknowledgments](#-acknowledgments)
+
 ## 🌟 Features
 
 - **ReAct Agent Framework**: Implements the ReAct pattern for reasoning and action
 - **Structured Output**: Returns responses in a validated Pydantic schema format
-- **Web Search Integration**: Uses Tavily Search for real-time web information retrieval
-- **Claude 3.5 Sonnet**: Powered by Anthropic's latest language model
-- **Modular Architecture**: Clean, object-oriented design with separate concerns
+- **Web Search Integration**: Uses [Tavily Search API](https://tavily.com/) - an AI-optimized search engine designed specifically for LLM agents, providing accurate and relevant search results
+- **Claude 3.5 Sonnet**: Powered by Anthropic's latest language model for advanced reasoning capabilities
+- **Modular Architecture**: Clean, object-oriented design with separate concerns for easy maintenance
 - **Configurable**: Easy configuration management for different use cases
-- **Type-Safe**: Full type hints and Pydantic validation
+- **Type-Safe**: Full type hints and Pydantic validation for robust code
 
 ## 📋 Prerequisites
 
@@ -32,22 +57,6 @@ cd job-search-agent
 uv sync
 ```
 
-### Using pip
-
-```bash
-# Clone the repository
-git clone https://github.com/devaaks/first-agent.git
-cd job-search-agent
-
-# Create a virtual environment
-python -m venv venv
-source venv/bin/activate  # On macOS/Linux
-# or
-venv\Scripts\activate  # On Windows
-
-# Install dependencies
-pip install -r requirements.txt
-```
 
 ## ⚙️ Configuration
 
@@ -58,6 +67,18 @@ ANTHROPIC_API_KEY=your_anthropic_api_key_here
 TAVILY_API_KEY=your_tavily_api_key_here
 ```
 
+You can use the provided `.env.example` file as a template:
+
+```bash
+cp .env.example .env
+# Then edit .env with your actual API keys
+```
+
+### Getting API Keys
+
+- **Anthropic API Key**: Sign up at [console.anthropic.com](https://console.anthropic.com/) to get your API key
+- **Tavily API Key**: Sign up at [app.tavily.com](https://app.tavily.com/) to get your API key (free tier available)
+
 ## 💻 Usage
 
 ### Basic Example
@@ -65,7 +86,7 @@ TAVILY_API_KEY=your_tavily_api_key_here
 Run the main script:
 
 ```bash
-python new-main.py
+python main.py
 ```
 
 ### Custom Implementation
@@ -97,7 +118,7 @@ ResultProcessor.display_result(result)
 ```
 job-search-agent/
 ├── main.py              # Original implementation
-├── new-main.py          # Modular, production-ready implementation
+ implementation
 ├── prompt.py            # Custom ReAct prompt templates
 ├── schema.py            # Pydantic schemas for structured output
 ├── pyproject.toml       # Project dependencies and metadata
