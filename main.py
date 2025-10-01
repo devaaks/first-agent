@@ -25,23 +25,19 @@ llm = ChatAnthropic(
     temperature=0,
     max_tokens=512
 )
+structured_llm = llm.with_structured_output(AgentResponse)
 
 react_prompt = hub.pull("hwchase17/react")
 output_parser = PydanticOutputParser(pydantic_object=AgentResponse)
 react_prompt_with_format_instructions = PromptTemplate(
     input_variables=["tools", "tool_names", "input", "agent_scratchpad"],
     template=REACT_PROMPT_WITH_FORMAT_INSTRUCTIONS,
-    partial_variables={
-        "format_instructions": output_parser.get_format_instructions()
-    },
-).partial(format_instructions=output_parser.get_format_instructions())
-
+).partial(format_instructions='')
 
 agent = create_react_agent(llm, tools, prompt=react_prompt_with_format_instructions)
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=False)
 extract_output = RunnableLambda(lambda x: x['output'])
-output_output = RunnableLambda(lambda x: output_parser.parse(x))
-chain = agent_executor | extract_output | output_output
+chain = agent_executor | extract_output | structured_llm
 
 def main():
     result = chain.invoke(
