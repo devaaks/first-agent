@@ -39,7 +39,9 @@ react_prompt_with_format_instructions = PromptTemplate(
 
 agent = create_react_agent(llm, tools, prompt=react_prompt_with_format_instructions)
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=False)
-chain = agent_executor
+extract_output = RunnableLambda(lambda x: x['output'])
+output_output = RunnableLambda(lambda x: output_parser.parse(x))
+chain = agent_executor | extract_output | output_output
 
 def main():
     result = chain.invoke(
@@ -48,22 +50,8 @@ def main():
         }
     )
 
-    try:
-        output_data = json.loads(result['output'])
-        players_name = output_data.get('playersName', [])
-        
-        print('------------------- Players Info -------------------')
-        print("Players Name:", players_name)
-        print("Number of players:", len(players_name))
-        
-        # Print each player individually
-        for i, player in enumerate(players_name, 1):
-            print(f"{i}. {player}")
-            
-    except json.JSONDecodeError:
-        print("Error: Could not parse the output as JSON")
-    except KeyError as e:
-        print(f"Error: Key {e} not found in the result")
+    print('------------------- Player Names -------------------')
+    print(result.playersName)
 
 
 if __name__ == "__main__":
