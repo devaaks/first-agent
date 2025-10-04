@@ -51,7 +51,7 @@ A modular AI-powered agent built with LangChain and Claude that uses the ReAct (
 ```bash
 # Clone the repository
 git clone https://github.com/devaaks/first-agent.git
-cd job-search-agent
+cd search-agent
 
 # Install dependencies with UV
 uv sync
@@ -92,10 +92,10 @@ python main.py
 ### Custom Implementation
 
 ```python
-from new_main import JobSearchAgent, JobSearchAgentConfig, ResultProcessor
+from new_main import SearchAgent, SearchAgentConfig, ResultProcessor
 
 # Create custom configuration
-config = JobSearchAgentConfig(
+config = SearchAgentConfig(
     model_name="claude-3-5-sonnet-latest",
     temperature=0.0,
     max_tokens=512,
@@ -103,7 +103,7 @@ config = JobSearchAgentConfig(
 )
 
 # Initialize the agent
-agent = JobSearchAgent(config)
+agent = SearchAgent(config)
 
 # Execute a search
 query = "Find the top 3 Python libraries for data science"
@@ -116,9 +116,8 @@ ResultProcessor.display_result(result)
 ## 📁 Project Structure
 
 ```
-job-search-agent/
-├── main.py              # Original implementation
- implementation
+search-agent/
+├── main.py              # Main agent implementation
 ├── prompt.py            # Custom ReAct prompt templates
 ├── schema.py            # Pydantic schemas for structured output
 ├── pyproject.toml       # Project dependencies and metadata
@@ -131,22 +130,22 @@ job-search-agent/
 
 ### Core Components
 
-1. **JobSearchAgentConfig**: Configuration class for agent settings
-2. **JobSearchAgent**: Main agent class that orchestrates the search process
+1. **SearchAgentConfig**: Configuration class for agent settings
+2. **SearchAgent**: Main agent class that orchestrates the search process
 3. **ResultProcessor**: Utility class for parsing and displaying results
 4. **AgentResponse Schema**: Pydantic model for structured output validation
 
 ### Flow
 
 ```
-User Query → JobSearchAgent → ReAct Agent → Tool (Tavily) → Structured Response
+User Query → SearchAgent → ReAct Agent → Tool (Tavily) → Structured Response
 ```
 
 ## 🔧 Customization
 
 ### Adding New Tools
 
-Edit the `_create_tools` method in `JobSearchAgent`:
+Edit the `_create_tools` method in `SearchAgent`:
 
 ```python
 def _create_tools(self) -> List[Any]:
@@ -188,7 +187,7 @@ isort .
 Set `verbose=True` in the configuration to see detailed agent reasoning:
 
 ```python
-config = JobSearchAgentConfig(verbose=True)
+config = SearchAgentConfig(verbose=True)
 ```
 
 ## 📦 Dependencies
@@ -245,7 +244,7 @@ uv sync  # or pip install -r requirements.txt
 
 Enable verbose mode to see the agent's reasoning process:
 ```python
-config = JobSearchAgentConfig(verbose=True)
+config = SearchAgentConfig(verbose=True)
 ```
 
 ## 📄 License
@@ -256,8 +255,10 @@ MIT License
 
 - Built with [LangChain](https://github.com/langchain-ai/langchain)
 - Powered by [Anthropic Claude](https://www.anthropic.com/)
-- Search capabilities by [Tavily](https://tavily.com/)
+- - Search capabilities by [Tavily](https://tavily.com/)
 
 ---
 
-**Note**: This project is a demonstration of the ReAct agent pattern and can be adapted for various information retrieval tasks beyond job searching.
+**Note**: This project is a demonstration of the ReAct agent pattern and can be adapted for various information retrieval tasks.
+
+````

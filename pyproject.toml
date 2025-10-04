@@ -1,7 +1,7 @@
 [project]
-name = "job-search-agent"
+name = "search-agent"
 version = "0.1.0"
-description = "Add your description here"
+description = "A modular AI-powered search agent using ReAct framework"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
